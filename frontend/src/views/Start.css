@@ -1,0 +1,35 @@
+section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+h1{
+    font-size: 60px;
+}
+span{
+    transition: all 400ms ease-in-out;
+    margin: 0 15px;
+    border-radius: 100px;
+    padding: 25px;
+    font-size: 20px;
+    font-weight: 400;
+}
+span:hover{
+    transform: scale(1.1);
+    font-weight: bolder;
+    background-color: rgba(236, 246, 255, 0.124);
+}
+.primary{
+    color: rgb(182, 182, 238);
+}
+.primary:hover{
+   
+    color: rgb(245, 244, 170);
+}
+.secondary{
+    color: rgba(117, 117, 200, 0.874);
+}
+.secondary:hover{
+    color: rgb(219, 185, 83);
+}

@@ -1,0 +1,12 @@
+# just don't share it
+.env
+
+# compiled stuff
+node_modules
+dist
+
+# other
+vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store

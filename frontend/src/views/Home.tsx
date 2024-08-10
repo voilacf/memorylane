@@ -1,5 +1,5 @@
 import './Home.css';
-import TodoList from '../components/TodoList';
+import List from '../components/List';
 
 function Home () {
     const list = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -7,9 +7,8 @@ function Home () {
         <>
         <section><h1>Your Todolists:</h1></section>
         <main>
-            
             <ul>
-                {list.map(value => <li key={value} ><TodoList/></li>)}
+                {list.map(value => <li key={value} ><List/></li>)}
             </ul>
         </main>
         </>

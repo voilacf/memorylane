@@ -1,4 +1,4 @@
-div.list{
+button.list{
     width: calc(20vw - 20px);
     height: calc(20vh - 20px);
     border-radius: 10%;
@@ -7,7 +7,7 @@ div.list{
     padding: 15px;
 }
 
-div.list:hover{
+button.list:hover{
     transform: scale(1.05) translateY(-5px);
     box-shadow: 0 5px 25px rgb(27, 27, 27);
     /* transform: translateY(-5px); */

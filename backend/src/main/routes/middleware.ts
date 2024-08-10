@@ -1,6 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
-import dotenv from 'dotenv';
-dotenv.config;
+import express, { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import cors from 'cors';
 import helmet from 'helmet'
@@ -20,7 +18,6 @@ export const registerMiddlewares = (server: express.Express): void => {
 }
 
 // for authentication -> check whether user is signed in or not -> if so redirct to home / todolist , if not redirect to log in 
-function middleware(req: Request, res: Response, next: NextFunction) {
-    // next();
-    return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/signin`);
+function middleware(req: Request, res: Response) {
+    return res.sendStatus(500).redirect("/error");
 }

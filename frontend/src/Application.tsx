@@ -3,6 +3,7 @@ import Start from "./views/Start";
 import Signin from "./views/Signin";
 import Signup from "./views/Signup";
 import Home from "./views/Home";
+import Todolist from "./views/Todolist";
 
 function Application() {
     return (
@@ -12,6 +13,7 @@ function Application() {
                 <Route path="/signin" element={<Signin/>}/>
                 <Route path="/signup" element={<Signup/>}/>
                 <Route path="/home" element={<Home/>}/>
+                <Route path="/todolist" element={<Todolist/>}/>
             </Routes>
         </Router>
     )

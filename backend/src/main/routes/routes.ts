@@ -12,9 +12,11 @@ export const registerRouetes = (app: express.Express): void => {
     app.post('/api/signup', signupHandler);
     app.post('/api/signin', signinHandler);
 
+    // redirect here with middleware
+    app.all('/error', errorHandler);
+
     // use middleware
     app.get('/home', homeHandler);
-    app.all('/error', errorHandler);
 
     // implement cookie to get current User 
     app.all('/api/:user/todolists', todolistHandler);

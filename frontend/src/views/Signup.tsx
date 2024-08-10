@@ -54,7 +54,7 @@ function Signup() {
                 </ul>
         </section>
         <section>
-            <button className='primary' type='submit'><span>Get started</span></button>
+            <button className='primary submit-btn' type='submit'><span>Get started</span></button>
             <a className='secondary' href='/'><span>Go back</span></a>
         </section>
         </form>

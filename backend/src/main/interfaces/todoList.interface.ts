@@ -6,4 +6,3 @@ export interface TodoList {
 	unchecked: number,
 	backgroundColor: string
 }
-

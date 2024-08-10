@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { signupUserService } from "../services/user.service";
+import { UserServiceStatus } from "../interfaces/user.interface";
 
-export const signupHandler = (req: Request, res: Response) => {
-    
+export const signupHandler = async (req: Request, res: Response) => {
+
     const { username, password, confirmedPassword } = req.body;
     console.log(password + " and c: " + confirmedPassword);
 
@@ -14,7 +15,10 @@ export const signupHandler = (req: Request, res: Response) => {
     }
 
     try {
-        signupUserService(username, password);
+        const result = await signupUserService(username, password);
+        if (result === UserServiceStatus.ERR_NAME) {
+            return res.status(400).json({ message: 'Username already taken' });
+        }
         return res.status(201).json({ message: 'User registered successfully' });
     } catch (error: any) {
         console.error("Error:", error);

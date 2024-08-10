@@ -47,7 +47,7 @@ function Signin () {
                 </ul>
         </section>
         <section>
-            <button className='primary' type='submit'><span>Submit</span></button>
+            <button className='primary submit-btn' type='submit'><span>Submit</span></button>
             <a className='secondary' href='/Signup'><span>Sign up</span></a>
         </section>
         </form>

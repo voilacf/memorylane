@@ -1,0 +1,23 @@
+#heading{
+    width: 100vw;
+    height: 20vh;
+}
+#content{
+    width: 100vw;
+    height: 80vh;
+}
+#todolist{
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 60vh;
+    overflow: scroll;
+    padding: 0;
+    margin: 0;
+}
+#todolist > li {
+    border-bottom: 1pt solid #ffffffd0;
+    padding: 25px 25px 10px 25px;
+}

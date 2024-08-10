@@ -10,7 +10,7 @@ import { Db } from 'mongodb';
 export class Server {
     private static database: Database;
 
-    public static async start() {
+    public static async start(port: any) {
         const app: express.Express = express();
 
         const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@cluster0.mjfurro.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -21,7 +21,7 @@ export class Server {
         registerMiddlewares(app);
         registerRouetes(app);
 
-        const port = process.env.PORT || 5000;
+        // const port = process.env.PORT || 5000;
 
         app.listen(port, () => {
             console.log(`Application listening at http://localhost:${port}`);
@@ -37,4 +37,6 @@ export class Server {
 
 }
 
-Server.start();
+Server.start(process.env.PORT_PROD).catch(err => {
+    console.error("Failed to start server: ", err);
+});

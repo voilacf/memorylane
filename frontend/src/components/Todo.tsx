@@ -1,46 +1,108 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Todo.css';
-import axios from 'axios';
 
-const Todo = (id:string) => {
-    const [formData, setFormData] = useState({
-        checked: false,
-        todo: ''
-    });
-    const handleChange = (e:any) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    }
-    const handleSubmit = (e:any) => {
-        e.preventDefault();
-        const response = axios.post('http://localhost:3000/api/:user/:todolist/todo');
-        if (!response) {  // todo check response status 
-            console.log("added new todo");
-        } else {
-            console.log("Something went wrong while adding new todo");
-        }
-    }
-    const handleButtonClick = () => {
-        const value = document.getElementById(id);
-        // @ts-ignore
-        const test = value[value];
-        if (test === "OFF"){
-            
-        } else if (test === "ON") {
-
-        }
-    }
-    return (
-        <div style={{display: "flex", justifyContent: "space-between", alignItems: "start"}}>
-            <form onSubmit={handleSubmit}>
-                <div><input className="checkbox" type="checkbox" style={{width: "25px", height: "25px", margin: "0 15px 0 0"}}/></div>
-                <div><input id="todo-input" type="text" placeholder="Add Todo" onChange={handleChange}/></div>
-                <div><button id={id} value={"OFF"} type="submit" onSubmit={handleButtonClick}><span>{formData.todo}</span></button></div>
-            </form>
-        </div>
-    );
+interface Todo {
+  text: string;
+  completed: boolean;
 }
 
-export default Todo;
+const TodoComponent: React.FC = () => {
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    //todo: make database call here instead 
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+
+  const [currentTodo, setCurrentTodo] = useState<string>("");
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    //todo: make database call here instead 
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentTodo(e.target.value);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && currentTodo.trim()) {
+      if (editIndex !== null) {
+        const updatedTodos = [...todos];
+        updatedTodos[editIndex].text = currentTodo;
+        setTodos(updatedTodos);
+        setEditIndex(null);
+      } else {
+        setTodos([...todos, { text: currentTodo, completed: false }]);
+      }
+      setCurrentTodo("");
+    }
+  };
+
+  const toggleComplete = (index: number) => {
+    const updatedTodos = [...todos];
+    updatedTodos[index].completed = !updatedTodos[index].completed;
+    setTodos(updatedTodos);
+
+    setTimeout(() => {
+        const newTodos = updatedTodos.filter((_, i) => i !== index);
+        setTodos(newTodos);
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+    }, 1000);
+  };
+
+  const handleEdit = (index: number) => {
+    setCurrentTodo(todos[index].text);
+    setEditIndex(index);
+  };
+
+  return (
+    <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+      <ul style={{display:"flex", flexDirection: "column", maxHeight: "500px", overflow:"scroll"}}>
+        {todos.map((todo, index) => (
+          <li key={index} style={{borderBottom: "1pt solid #ffffffd0", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => toggleComplete(index)}
+              style={{width: "30px", height: "30px"}}
+            />
+            {editIndex === index ? (
+              <input
+                type="text"
+                value={currentTodo}
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
+                autoFocus
+                style={{width: "50vw", fontSize: "22px", height: "35px", padding: "15px", border: "none", backgroundColor: "transparent", borderRadius: "40px"}}
+              />
+            ) : (
+              <span
+                style={{
+                  textDecoration: todo.completed ? "line-through" : "",
+                  cursor: "pointer",
+                  width: "50vw",
+                  fontSize: "22px",
+                  height: "35px"
+                }}
+                onClick={() => handleEdit(index)}
+              >
+                {todo.text}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+      <input
+        type="text"
+        value={currentTodo}
+        onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
+        placeholder="Add new todo by starting typing here"
+        style={{width: "50vw", marginTop: "50px", border: "none", height: "40px", backgroundColor: "transparent", textAlign: "center", fontSize: "24px", color: "white", borderRadius: "50px"}}
+      />
+    </div>
+  );
+};
+
+export default TodoComponent;
